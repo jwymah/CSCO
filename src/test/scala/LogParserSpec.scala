@@ -76,5 +76,27 @@ class LogParserSpec extends WordSpec with Matchers {
       logParser.logs.contains(validEntry3) shouldBe true
       logParser.errors.size shouldBe 1
     }
+
+    "discard lines containing invalid sha" in {
+      val invalidSha = """{"ts":1551140352,"pt":55,"si":"3380fb19-0bdb-46ab-abcd-e4c5cd448074","uu":"0dd24034-36d6-4b1e-a6c1-a52cc984f105","bg":"77e28e28-745a-474b-a496-3c0e086eaec0","sha":"abb3ec1b8174043d5cd21d21fbe3c3fb3e9a11c7ceff3314a3222404feedda5h","nm":"phkkrw.ext","ph":"/efvrfutgp/expgh/phkkrw","dp":2}"""
+
+      val logParser = new LogParser(validLines ++ Seq(invalidSha), true)
+      logParser.logs.size shouldBe 3
+      logParser.logs.contains(validEntry1) shouldBe true
+      logParser.logs.contains(validEntry2) shouldBe true
+      logParser.logs.contains(validEntry3) shouldBe true
+      logParser.errors.size shouldBe 1
+    }
+
+    "discard lines containing invalid dp" in {
+      val invalidDp = """{"ts":1551140352,"pt":55,"si":"3380fb19-0bdb-46ab-abcd-e4c5cd448074","uu":"0dd24034-36d6-4b1e-a6c1-a52cc984f105","bg":"77e28e28-745a-474b-a496-3c0e086eaec0","sha":"abb3ec1b8174043d5cd21d21fbe3c3fb3e9a11c7ceff3314a3222404feedda52","nm":"phkkrw.ext","ph":"/efvrfutgp/expgh/phkkrw","dp":5}"""
+
+      val logParser = new LogParser(validLines ++ Seq(invalidDp), true)
+      logParser.logs.size shouldBe 3
+      logParser.logs.contains(validEntry1) shouldBe true
+      logParser.logs.contains(validEntry2) shouldBe true
+      logParser.logs.contains(validEntry3) shouldBe true
+      logParser.errors.size shouldBe 1
+    }
   }
 }

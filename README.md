@@ -15,11 +15,13 @@ sbt "run /tmp/log.json true"
 #### Method 2: Load project into intellij as sbt project and run Main class with arguments or test classes
 
 ### Assumptions
-* Invalid JSON / Invalid UUIDs / Unparsable fields into expected types - are caught but do not stop processing of other lines
+* Any errors in the file result in that line being ignored for processing. Errors may arise from:
+  * Invalid JSON / Invalid UUIDs / Unparsable fields into expected types
+  * Sha values that contain non-hex characters
+  * Disposition values outside expected range of [1,3]
 * multiple extension files are not check for - in this case only the final extension is kept
-		- can be added without too much effort
+		- can be added without too much effort, but expected behaviour should be defined
 * file contents are expected as 1 complete JSON per line
-* disposition values are not validated beyond data type.Unclear what to do if it were outside of defined values and the existing 3 values should be sufficient for.
 
 ### Misc 
 Written/run on mac OS Mojave 10.14.6 using Intellij

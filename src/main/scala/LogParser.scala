@@ -10,8 +10,16 @@ import io.circe.generic.auto._
  */
 class LogParser(lines: Seq[String], showErrors: Boolean = false) {
   val logEither = lines.map(decode[LogEntry])
+    .map{
+      case Right(s) =>
+        if (s.areFieldsValid)
+          Right(s)
+        else
+          Left("has invalid field values")
+      case Left(e) => Left(e)
+    }
 
-  val errors = logEither.collect{ case Left(e) => e}.toSeq
+  val errors = logEither.collect{ case Left(e) => e}
   if (!errors.isEmpty) {
     println(s"Encountered ${errors.size} lines with errors. Continuing without those lines.")
     // parsing and decoding errors available for other use cases
@@ -33,7 +41,11 @@ class LogParser(lines: Seq[String], showErrors: Boolean = false) {
       val log = decode[LogEntry](l)
       log match {
         case Left(e) => println(s"Error on line $i: $e")
-        case _ =>
+        case Right(s) =>
+          if (!s.isShaValid)
+            println(s"Error on line ${i}: sha contains non-hex chars: ${s.sha}")
+          if (!s.isDpValid)
+            println(s"Error on line $i: dp contains invalid value: ${s.dp}")
       }
       i += 1
     }

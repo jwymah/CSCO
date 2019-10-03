@@ -39,13 +39,14 @@ println(extCount)
       }
 
       "continue and exclude lines containing invalid json" in {
-        val lines = Source.fromURL(getClass.getResource("sampleWithInvalidLines.json")).getLines.toSeq
-        val logParser = new LogParser(lines)
+        val lines = Source.fromURL(getClass.getResource("sampleWithInvalidJsons.json")).getLines.toSeq
+        val logParser = new LogParser(lines, true)
 
         val extCount = logParser.doCountUniqueExtensions
 
+        logParser.errors.size shouldBe 4
         extCount.size shouldBe 2
-        extCount should contain("pdf", 1)
+        extCount should contain("pdf", 2)
         extCount should contain("ext", 3)
       }
 
@@ -55,9 +56,22 @@ println(extCount)
 
         val extCount = logParser.doCountUniqueExtensions
 
+        logParser.errors.size shouldBe 2
         extCount.size shouldBe 2
         extCount should contain("pdf", 2)
         extCount should contain("ext", 3)
       }
+
+    "continue and exclude lines containing invalid sha or dp" in {
+      val lines = Source.fromURL(getClass.getResource("sampleWithInvalidShaAndDp.json")).getLines.toSeq
+      val logParser = new LogParser(lines, true)
+
+      val extCount = logParser.doCountUniqueExtensions
+
+      logParser.errors.size shouldBe 2
+      extCount.size shouldBe 2
+      extCount should contain("pdf", 1)
+      extCount should contain("ext", 2)
+    }
   }
 }
