@@ -21,7 +21,7 @@ class LogParser(lines: Seq[String], showErrors: Boolean = false) {
 
   val logs = logEither.collect{ case Right(s) => s}
 
-  def doCountUniqueExtensions(): Seq[(String, Int)] = NameLib.countUniqueExtensions(logs.map(_.nm))
+  def doCountUniqueExtensions: Seq[(String, Int)] = NameLib.countUniqueExtensions(logs.map(_.nm))
 
   /**
    * Iterates over the lines again, keeping count of lines gone by.

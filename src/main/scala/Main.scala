@@ -9,7 +9,7 @@ object Main extends App {
     val source = Source.fromFile(filePath)
     val lines = source.getLines.toSeq
     val logParser = new LogParser(lines, showErrors)
-    logParser.doCountUniqueExtensions().map { ext => println(s"${ext._1}: ${ext._2}") }
+    logParser.doCountUniqueExtensions.foreach( ext => println(s"${ext._1}: ${ext._2}") )
 
     source.close()
   }
@@ -17,11 +17,12 @@ object Main extends App {
   def usage(): Unit = {
     println(
       """
-        | Usage: sbt run [filepath] [showErrors]
+        | Usage: sbt run [filepath] [showErrors (optional)]
         |
         | [filepath] absolute path to the json file
         | [showErrors] true/false whether to print out errors encountered during parsing. default: false
         |
+        | eg. sbt "run /tmp/json true"
         |""".stripMargin)
   }
 }
