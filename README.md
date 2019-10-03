@@ -2,16 +2,16 @@
 #### Method 1: command line
 
 navigate to project directory and run using sbt
-``
+```
 sbt "run [absolute path to json file] [Optional: true/false to show parsing errors]"
-``
+```
 
 eg.
-``
+```
 sbt "run /tmp/log.json true"
-``
+```
 ##### Running Tests with sbt
-``sbt test``
+```sbt test```
 #### Method 2: Load project into intellij as sbt project and run Main class with arguments or test classes
 
 ### Assumptions
