@@ -19,6 +19,7 @@ sbt "run /tmp/log.json true"
   * Invalid JSON / Invalid UUIDs / Unparsable fields into expected types
   * Sha values that contain non-hex characters
   * Disposition values outside expected range of [1,3]
+* Logs with disposition values in range of [1,3] are all included for processing
 * multiple extension files are not check for - in this case only the final extension is kept
 		- can be added without too much effort, but expected behaviour should be defined
 * file contents are expected as 1 complete JSON per line
