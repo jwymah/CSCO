@@ -15,7 +15,7 @@ sbt "run /tmp/log.json true"
 #### Method 2: Load project into intellij as sbt project and run Main class with arguments or test classes
 
 ### Assumptions
-* Invalid JSON / Invalid UUIDs / Unparsable into expected types are caught but do not stop processing of other lines
+* Invalid JSON / Invalid UUIDs / Unparsable fields into expected types - are caught but do not stop processing of other lines
 * multiple extension files are not check for - in this case only the final extension is kept
 		- can be added without too much effort
 * file contents are expected as 1 complete JSON per line
