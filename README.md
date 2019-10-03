@@ -23,6 +23,7 @@ sbt "run /tmp/log.json true"
 * multiple extension files are not check for - in this case only the final extension is kept
 		- can be added without too much effort, but expected behaviour should be defined
 * file contents are expected as 1 complete JSON per line
+* validation of timestamp / processing time values are not checked.
 
 ### Misc 
 Written/run on mac OS Mojave 10.14.6 using Intellij
